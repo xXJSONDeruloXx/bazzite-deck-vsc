@@ -12,6 +12,13 @@ set -ouex pipefail
 # this installs a package from fedora repos
 dnf5 install -y tmux 
 
+### Install Docker
+
+# Install Docker from the official repository
+dnf5 install -y dnf-plugins-core
+dnf5 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+dnf5 install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
 ### Install Visual Studio Code
 
 # Import Microsoft GPG key
@@ -43,3 +50,4 @@ dnf5 install -y code
 #### Example for enabling a System Unit File
 
 systemctl enable podman.socket
+systemctl enable docker
