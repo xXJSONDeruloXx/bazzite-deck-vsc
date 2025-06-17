@@ -12,6 +12,27 @@ set -ouex pipefail
 # this installs a package from fedora repos
 dnf5 install -y tmux 
 
+### Install Visual Studio Code
+
+# Import Microsoft GPG key
+rpm --import https://packages.microsoft.com/keys/microsoft.asc
+
+# Add Visual Studio Code repository
+cat > /etc/yum.repos.d/vscode.repo << 'EOF'
+[code]
+name=Visual Studio Code
+baseurl=https://packages.microsoft.com/yumrepos/vscode
+enabled=1
+autorefresh=1
+type=rpm-md
+gpgcheck=1
+gpgkey=https://packages.microsoft.com/keys/microsoft.asc
+EOF
+
+# Update package cache and install VS Code
+dnf5 check-update || true
+dnf5 install -y code
+
 # Use a COPR Example:
 #
 # dnf5 -y copr enable ublue-os/staging
