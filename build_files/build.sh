@@ -14,9 +14,27 @@ dnf5 install -y tmux
 
 ### Install Docker
 
+# Create GPG directory to avoid GPG errors
+mkdir -p /root/.gnupg
+chmod 700 /root/.gnupg
+
 # Install Docker from the official repository
 dnf5 install -y dnf-plugins-core
-dnf5 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+
+# Add Docker repository manually instead of using config-manager
+cat > /etc/yum.repos.d/docker-ce.repo << 'EOF'
+[docker-ce-stable]
+name=Docker CE Stable - $basearch
+baseurl=https://download.docker.com/linux/fedora/$releasever/$basearch/stable
+enabled=1
+gpgcheck=1
+gpgkey=https://download.docker.com/linux/fedora/gpg
+EOF
+
+# Import Docker GPG key
+rpm --import https://download.docker.com/linux/fedora/gpg
+
+# Install Docker packages
 dnf5 install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 ### Install Visual Studio Code
