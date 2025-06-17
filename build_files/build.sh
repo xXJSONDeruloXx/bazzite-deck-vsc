@@ -15,8 +15,8 @@ dnf5 install -y tmux
 ### Install Docker
 
 # Create GPG directory to avoid GPG errors
-mkdir -p /root/.gnupg
-chmod 700 /root/.gnupg
+mkdir -p /root/.gnupg 2>/dev/null || true
+chmod 700 /root/.gnupg 2>/dev/null || true
 
 # Install Docker from the official repository
 dnf5 install -y dnf-plugins-core
